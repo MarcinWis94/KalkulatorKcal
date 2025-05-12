@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalkulator Kalorii</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        /* Ustawienie tła na całą stronę */
+        body {
+            background-image: url('file:///C:/Users/Marcin/Desktop/ae7f8a39-7e19-455a-a346-421dd2c08d22.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            min-height: 100vh; /* Pełna wysokość strony */
+            margin: 0;
+        }
+
+        /* Ustawienia formularza */
+        .form-container {
+            background-color: rgba(255, 255, 255, 0.85); /* lekka przezroczystość */
+            backdrop-filter: blur(10px); /* rozmycie tła */
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col items-center justify-center">
+    <div class="form-container w-full max-w-lg mb-8">
+        <h1 class="text-3xl font-bold text-center text-green-700 mb-8">Kalkulator Kalorii</h1>
+        <form id="calorieForm" class="space-y-4">
+            <div>
+                <label for="gender" class="block text-lg font-medium">Płeć:</label>
+                <select id="gender" class="w-full p-2 rounded-lg border border-gray-300">
+                    <option value="M">Mężczyzna</option>
+                    <option value="F">Kobieta</option>
+                </select>
+            </div>
+            <div>
+                <label for="age" class="block text-lg font-medium">Wiek:</label>
+                <input type="number" id="age" class="w-full p-2 rounded-lg border border-gray-300" placeholder="np. 30" min="1" value="30">
+            </div>
+            <div>
+                <label for="height" class="block text-lg font-medium">Wzrost (cm):</label>
+                <input type="number" id="height" class="w-full p-2 rounded-lg border border-gray-300" placeholder="np. 175" value="160" min="1">
+            </div>
+            <div>
+                <label for="weight" class="block text-lg font-medium">Waga (kg):</label>
+                <input type="number" id="weight" class="w-full p-2 rounded-lg border border-gray-300" placeholder="np. 80" value="60" min="1">
+            </div>
+            <div>
+                <label for="activity" class="block text-lg font-medium">Stopień aktywności:</label>
+                <select id="activity" class="w-full p-2 rounded-lg border border-gray-300">
+                    <option value="1.2">Pacjent leżący w łóżku, bardzo niska aktywność</option>
+                    <option value="1.3">Praca siedząca, minimalna aktywność w ciągu dnia</option>
+                    <option value="1.4">Praca siedząca, średnia aktywność, lekkie treningi 3x w tygodniu</option>
+                    <option value="1.5">Sporo ruchu w ciągu dnia, lekkie treningi</option>
+                    <option value="1.6">Sporo ruchu w ciągu dnia, ciężkie, regularne treningi</option>
+                    <option value="1.7">Praca fizyczna, duże ruchu po pracy</option>
+                    <option value="1.8">Praca fizyczna, lekkie treningi</option>
+                    <option value="1.9">Praca fizyczna, ciężkie treningi</option>
+                </select>
+            </div>
+            <div>
+                <label for="goal" class="block text-lg font-medium">Cel diety:</label>
+                <select id="goal" class="w-full p-2 rounded-lg border border-gray-300">
+                    <option value="-500">Redukcja masy ciała</option>
+                    <option value="0">Utrzymanie masy ciała</option>
+                    <option value="500">Budowa masy mięśniowej</option>
+                </select>
+            </div>
+            <button type="button" onclick="calculateCalories()" class="w-full bg-green-700 text-white p-3 rounded-lg font-bold mt-4 hover:bg-green-800">Oblicz Kalorie</button>
+            <p id="result" class="text-lg font-semibold text-center mt-4"></p>
+        </form>
+    </div>
+    <footer class="text-center mb-4 text-green-900">
+        <p class="text-lg font-bold">Bartosz Brzeziński</p>
+        <p>Telefon: +48 730 554 586</p>
+        <p>Whatsapp: <a href="https://wa.me/48730554586" target="_blank" class="text-green-700 font-bold"><i class="fab fa-whatsapp"></i> +48 730 554 586</a></p>
+        <p>Messenger: <a href="https://www.facebook.com/bartosz.brzezinski.549" target="_blank" class="text-green-700 font-bold"><i class="fab fa-facebook-messenger"></i> bartosz.brzezinski.549</a></p>
+        <p>Email: <a href="mailto:bartosh.brzezinski@gmail.com" class="text-green-700 font-bold"><i class="fas fa-envelope"></i> bartosh.brzezinski@gmail.com</a></p>
+    </footer>
+    <script>
+        function calculateCalories() {
+            const gender = document.getElementById('gender').value;
+            const age = parseInt(document.getElementById('age').value);
+            const height = parseInt(document.getElementById('height').value);
+            const weight = parseFloat(document.getElementById('weight').value);
+            const activity = parseFloat(document.getElementById('activity').value);
+            const goal = parseInt(document.getElementById('goal').value);
+
+            if (age <= 0 || height <= 0 || weight <= 0) {
+                alert('Wprowadź prawidłowe dane! Wartości muszą być większe od zera.');
+                return;
+            }
+
+            // Podstawowe równanie BMR (Mifflin-St Jeor)
+            let bmr;
+            if (gender === 'M') {
+                bmr = 10 * weight + 6.25 * height - 5 * age + 5;
+            } else {
+                bmr = 10 * weight + 6.25 * height - 5 * age - 161;
+            }
+
+            // Uwzględnienie poziomu aktywności i celu
+            const calories = bmr * activity + goal;
+            document.getElementById('result').innerText = `Twoje dzienne zapotrzebowanie kaloryczne wynosi około ${Math.round(calories)} kcal.`;
+        }
+    </script>
+</body>
+</html>
