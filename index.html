@@ -3,24 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kalkulator Kalorii</title>
+    <title>Kalkulator BMR i BMI</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
-        /* Ustawienie tła na całą stronę */
         body {
             background-image: url('file:///C:/Users/Marcin/Desktop/ae7f8a39-7e19-455a-a346-421dd2c08d22.jpg');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
-            min-height: 100vh; /* Pełna wysokość strony */
+            min-height: 100vh;
             margin: 0;
         }
-
-        /* Ustawienia formularza */
         .form-container {
-            background-color: rgba(255, 255, 255, 0.85); /* lekka przezroczystość */
-            backdrop-filter: blur(10px); /* rozmycie tła */
+            background-color: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
             padding: 30px;
             border-radius: 15px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
@@ -29,7 +26,7 @@
 </head>
 <body class="min-h-screen flex flex-col items-center justify-center">
     <div class="form-container w-full max-w-lg mb-8">
-        <h1 class="text-3xl font-bold text-center text-green-700 mb-8">Kalkulator Kalorii</h1>
+        <h1 class="text-3xl font-bold text-center text-green-700 mb-8">Kalkulator Kalorii i BMI</h1>
         <form id="calorieForm" class="space-y-4">
             <div>
                 <label for="gender" class="block text-lg font-medium">Płeć:</label>
@@ -71,8 +68,9 @@
                     <option value="500">Budowa masy mięśniowej</option>
                 </select>
             </div>
-            <button type="button" onclick="calculateCalories()" class="w-full bg-green-700 text-white p-3 rounded-lg font-bold mt-4 hover:bg-green-800">Oblicz Kalorie</button>
+            <button type="button" onclick="calculateCaloriesAndBMI()" class="w-full bg-green-700 text-white p-3 rounded-lg font-bold mt-4 hover:bg-green-800">Oblicz BMR i BMI</button>
             <p id="result" class="text-lg font-semibold text-center mt-4"></p>
+            <p id="bmiResult" class="text-lg font-semibold text-center mt-2"></p>
         </form>
     </div>
     <footer class="text-center mb-4 text-green-900">
@@ -83,30 +81,31 @@
         <p>Email: <a href="mailto:bartosh.brzezinski@gmail.com" class="text-green-700 font-bold"><i class="fas fa-envelope"></i> bartosh.brzezinski@gmail.com</a></p>
     </footer>
     <script>
-        function calculateCalories() {
+        function calculateCaloriesAndBMI() {
             const gender = document.getElementById('gender').value;
             const age = parseInt(document.getElementById('age').value);
-            const height = parseInt(document.getElementById('height').value);
+            const height = parseInt(document.getElementById('height').value) / 100;
             const weight = parseFloat(document.getElementById('weight').value);
             const activity = parseFloat(document.getElementById('activity').value);
             const goal = parseInt(document.getElementById('goal').value);
-
             if (age <= 0 || height <= 0 || weight <= 0) {
                 alert('Wprowadź prawidłowe dane! Wartości muszą być większe od zera.');
                 return;
             }
-
-            // Podstawowe równanie BMR (Mifflin-St Jeor)
-            let bmr;
-            if (gender === 'M') {
-                bmr = 10 * weight + 6.25 * height - 5 * age + 5;
-            } else {
-                bmr = 10 * weight + 6.25 * height - 5 * age - 161;
-            }
-
-            // Uwzględnienie poziomu aktywności i celu
+            const bmi = weight / (height * height);
+            let bmiCategory;
+            if (bmi < 16.0) bmiCategory = 'Wygłodzenie';
+            else if (bmi < 17.0) bmiCategory = 'Wychudzenie';
+            else if (bmi < 18.5) bmiCategory = 'Niedowaga';
+            else if (bmi < 25.0) bmiCategory = 'Prawidłowa masa ciała';
+            else if (bmi < 30.0) bmiCategory = 'Nadwaga';
+            else if (bmi < 35.0) bmiCategory = 'Otyłość I stopnia';
+            else if (bmi < 40.0) bmiCategory = 'Otyłość II stopnia (duża)';
+            else bmiCategory = 'Otyłość III stopnia (chorobliwa)';
+            const bmr = gender === 'M' ? 10 * weight + 6.25 * (height * 100) - 5 * age + 5 : 10 * weight + 6.25 * (height * 100) - 5 * age - 161;
             const calories = bmr * activity + goal;
             document.getElementById('result').innerText = `Twoje dzienne zapotrzebowanie kaloryczne wynosi około ${Math.round(calories)} kcal.`;
+            document.getElementById('bmiResult').innerText = `Twoje BMI wynosi ${bmi.toFixed(2)} (${bmiCategory}).`;
         }
     </script>
 </body>
