@@ -7,32 +7,42 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
-        body {
-            background-image: url('./tlo1.jpg');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            min-height: 100vh;
-            margin: 0;
-            background-attachment: fixed;
-        }
+body {
+    background-image: url('./tlo1.jpg');
+    background-size: cover; /* Dopasowuje tło do całej szerokości i wysokości ekranu */
+    background-position: center;
+    background-repeat: no-repeat;
+    min-height: 100vh;
+    margin: 0;
+    background-attachment: fixed;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Wyrównuje treść na stronie w taki sposób, aby było miejsce na górze i dole */
+}
 
-        @media (max-width: 768px) {
-            body {
-                background-size: contain;
-                background-position: top;
-            }
-        }
+.form-container {
+    background-color: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(10px);
+    padding: 50px;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 90%;
+    max-width: 500px;
+    margin-top: 15%; /* Odstęp od góry strony */
+    margin-bottom: 15%; /* Odstęp od dołu strony */
+}
 
-        .form-container {
-            background-color: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(10px);
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            width: 90%;
-            max-width: 500px;
-        }
+@media (max-width: 768px) {
+    body {
+        background-size: contain;
+        background-position: top;
+    }
+
+    .form-container {
+        margin-top: 10%; /* W mniejszych rozdzielczościach, zmniejszamy odstęp */
+        margin-bottom: 10%;
+    }
+}
     </style>
 </head>
 <body class="min-h-screen flex flex-col items-center justify-center">
