@@ -8,25 +8,36 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
         body {
-            background-image: url('file:///C:/Users/Marcin/Desktop/ae7f8a39-7e19-455a-a346-421dd2c08d22.jpg');
+            background-image: url('./tlo1.jpg');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
             min-height: 100vh;
             margin: 0;
+            background-attachment: fixed;
         }
+
+        @media (max-width: 768px) {
+            body {
+                background-size: contain;
+                background-position: top;
+            }
+        }
+
         .form-container {
             background-color: rgba(255, 255, 255, 0.85);
             backdrop-filter: blur(10px);
             padding: 30px;
             border-radius: 15px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            width: 90%;
+            max-width: 500px;
         }
     </style>
 </head>
 <body class="min-h-screen flex flex-col items-center justify-center">
     <div class="form-container w-full max-w-lg mb-8">
-        <h1 class="text-3xl font-bold text-center text-green-700 mb-8">Kalkulator BMR i BMI</h1>
+        <h1 class="text-3xl font-bold text-center text-green-700 mb-8">Kalkulator Kalorii i BMI</h1>
         <form id="calorieForm" class="space-y-4">
             <div>
                 <label for="gender" class="block text-lg font-medium">Płeć:</label>
