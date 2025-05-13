@@ -8,24 +8,21 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
         body {
-            background-image: url('./tlo1.jpg');
+            background-image: url('tlo1.jpg');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
             min-height: 100vh;
             margin: 0;
-            background-attachment: fixed;
         }
-
         @media (max-width: 768px) {
             body {
                 background-size: contain;
-                background-position: top;
+                background-position: top center;
             }
         }
-
         .form-container {
-            background-color: rgba(255, 255, 255, 0.85);
+            background-color: rgba(255, 255, 255, 0.9);
             backdrop-filter: blur(10px);
             padding: 30px;
             border-radius: 15px;
@@ -33,10 +30,27 @@
             width: 90%;
             max-width: 500px;
         }
+        .consultation-banner {
+            margin-top: 20px;
+            text-align: center;
+            color: #1e3a1f;
+            background-color: rgba(255, 255, 255, 0.85);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            width: 90%;
+            max-width: 500px;
+        }
+        .consultation-banner img {
+            width: 100%;
+            max-width: 200px;
+            border-radius: 15px;
+            margin: 10px auto;
+        }
     </style>
 </head>
-<body class="min-h-screen flex flex-col items-center justify-center">
-    <div class="form-container w-full max-w-lg mb-8">
+<body class="flex flex-col items-center justify-center">
+    <div class="form-container">
         <h1 class="text-3xl font-bold text-center text-green-700 mb-8">Kalkulator Kalorii i BMI</h1>
         <form id="calorieForm" class="space-y-4">
             <div>
@@ -84,40 +98,10 @@
             <p id="bmiResult" class="text-lg font-semibold text-center mt-2"></p>
         </form>
     </div>
-    <footer class="text-center mb-4 text-green-900">
-        <p class="text-lg font-bold">Bartosz Brzeziński</p>
-        <p>Telefon: +48 730 554 586</p>
-        <p>Whatsapp: <a href="https://wa.me/48730554586" target="_blank" class="text-green-700 font-bold"><i class="fab fa-whatsapp"></i> +48 730 554 586</a></p>
-        <p>Messenger: <a href="https://www.facebook.com/bartosz.brzezinski.549" target="_blank" class="text-green-700 font-bold"><i class="fab fa-facebook-messenger"></i> bartosz.brzezinski.549</a></p>
-        <p>Email: <a href="mailto:bartosh.brzezinski@gmail.com" class="text-green-700 font-bold"><i class="fas fa-envelope"></i> bartosh.brzezinski@gmail.com</a></p>
-    </footer>
-    <script>
-        function calculateCaloriesAndBMI() {
-            const gender = document.getElementById('gender').value;
-            const age = parseInt(document.getElementById('age').value);
-            const height = parseInt(document.getElementById('height').value) / 100;
-            const weight = parseFloat(document.getElementById('weight').value);
-            const activity = parseFloat(document.getElementById('activity').value);
-            const goal = parseInt(document.getElementById('goal').value);
-            if (age <= 0 || height <= 0 || weight <= 0) {
-                alert('Wprowadź prawidłowe dane! Wartości muszą być większe od zera.');
-                return;
-            }
-            const bmi = weight / (height * height);
-            let bmiCategory;
-            if (bmi < 16.0) bmiCategory = 'Wygłodzenie';
-            else if (bmi < 17.0) bmiCategory = 'Wychudzenie';
-            else if (bmi < 18.5) bmiCategory = 'Niedowaga';
-            else if (bmi < 25.0) bmiCategory = 'Prawidłowa masa ciała';
-            else if (bmi < 30.0) bmiCategory = 'Nadwaga';
-            else if (bmi < 35.0) bmiCategory = 'Otyłość I stopnia';
-            else if (bmi < 40.0) bmiCategory = 'Otyłość II stopnia (duża)';
-            else bmiCategory = 'Otyłość III stopnia (chorobliwa)';
-            const bmr = gender === 'M' ? 10 * weight + 6.25 * (height * 100) - 5 * age + 5 : 10 * weight + 6.25 * (height * 100) - 5 * age - 161;
-            const calories = bmr * activity + goal;
-            document.getElementById('result').innerText = `Twoje dzienne zapotrzebowanie kaloryczne wynosi około ${Math.round(calories)} kcal.`;
-            document.getElementById('bmiResult').innerText = `Twoje BMI wynosi ${bmi.toFixed(2)} (${bmiCategory}).`;
-        }
-    </script>
+    <div class="consultation-banner">
+        <p><strong>Cześć! Nazywam się Bartek – w rok schudłem 20 kg!</strong></p>
+        <p>ZAPRASZAM CIĘ NA BEZPŁATNĄ KONSULTACJĘ ONLINE – POGADAMY O ZDROWIU, FORMIE I TWOICH CELACH.</p>
+        <img src="bartek.png" alt="Bartek Before and After">
+    </div>
 </body>
 </html>
